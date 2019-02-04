@@ -1,0 +1,4 @@
+parsel
+six
+pytest
+tox
