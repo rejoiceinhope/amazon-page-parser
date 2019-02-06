@@ -19,7 +19,7 @@ setup(
     version=version,
     description='A library for parsing amazon pages.',
     long_description=long_description,
-    url='',
+    url='https://github.com/hyan15/amazon-page-parser',
     author='hyan15',
     author_email='qwang16@olivetuniversity.edu',
     license='MIT',
