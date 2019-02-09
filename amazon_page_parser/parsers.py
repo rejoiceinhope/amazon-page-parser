@@ -160,8 +160,24 @@ class DetailParser(object):
             if key and value:
                 details[key] = value
 
+        details_elems = self.selector.xpath(
+            '//div[@id="detail-bullets"]/table/tr/td/div[@class="content"]/ul/li')
+        for details_elem in details_elems:
+            key = details_elem.xpath('./b/text()').get()
+            key = key.strip().strip(':') if key else ''
+            if key == 'Actors':
+                value = ','.join(details_elem.xpath('./a/text()').getall())
+            else:
+                value = ''.join(details_elem.xpath('./text()').getall())
+            value = value.strip() if value else ''
+            if key and value:
+                if key == 'Region':
+                    value = value.split('(').pop(0).strip()
+                details[key] = value
+
         if 'Shipping Weight' in details:
-            details['Shipping Weight'] = details['Shipping Weight'].replace('(', '').strip()
+            details['Shipping Weight'] = details['Shipping Weight'].replace(
+                '(', '').replace(')', '').strip()
 
         return details
 

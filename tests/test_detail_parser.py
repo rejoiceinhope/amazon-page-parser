@@ -278,6 +278,45 @@ def shared_context():
             c = unicode(c)
         context['B07H57DNVV']['parser'] = DetailParser(c)
 
+    page_path = os.path.join(base_path, 'B00004YS4O.html')
+    context['B00004YS4O'] = {
+        'page_path': page_path,
+        'detail': {
+            'title': 'The Cars Live - Musikladen 1979',
+            'author': ['Ric Ocasek', 'Ben Orr'],
+            'feature_bullets': [],
+            'book_description': "",
+            'product_description': '',
+            'images': [
+                'https://images-na.ssl-images-amazon.com/images/I/41oaL7KbUzL._SX38_SY50_CR,0,0,38,50_.jpg',
+                'https://images-na.ssl-images-amazon.com/images/I/51atWyKYatL._SX38_SY50_CR,0,0,38,50_.jpg'
+            ],
+            'star': 4.0,
+            'reviews': 79,
+            'rank': 119893,
+            'categories': "CDs & Vinyl>Alternative Rock>New Wave & Post-Punk>New Wave;Movies & TV>DVD>Performing Arts;Movies & TV>DVD>Music Videos & Concerts",
+            'details': {
+                'Actors': 'Ric Ocasek,Ben Orr,Greg Hawkes,Elliot Easton,David Robinson',
+                'Format': 'Color, Dolby, PAL',
+                'Language': 'English (Dolby Digital 5.1), Unknown (Dolby Digital 5.1)',
+                'Region': 'Region 1',
+                'Aspect Ratio': '1.33:1',
+                'Number of discs': '1',
+                'Rated': 'Not Rated',
+                'Studio': 'Rhino',
+                'DVD Release Date': 'October 24, 2000',
+                'Run Time': '93 minutes',
+                'ASIN': 'B00004YS4O'
+            }
+        }
+    }
+
+    with codecs.open(page_path, encoding='utf-8', errors='ignore') as f:
+        c = f.read()
+        if six.PY2:
+            c = unicode(c)
+        context['B00004YS4O']['parser'] = DetailParser(c)
+
     yield context
 
 def test_parse_title(shared_context):
