@@ -23,6 +23,7 @@ def shared_context():
         'detail': {
             'title': 'The Confidence Code for Girls: Taking Risks, Messing Up, and Becoming Your Amazingly Imperfect, Totally Powerful Self',
             'author': ['Katty Kay', 'Claire Shipman', 'JillEllyn Riley', 'Nan Lawson'],
+            'bylines': {},
             'feature_bullets': [],
             'book_description': 'Girls can rule the world',
             'product_description': '',
@@ -57,6 +58,7 @@ def shared_context():
         'detail': {
             'title': 'C Programming Language, 2nd Edition',
             'author': ['Brian W. Kernighan', 'Dennis M. Ritchie'],
+            'bylines': {},
             'feature_bullets': [],
             'book_description': "The authors present the complete guide to ANSI standard C language programming. Written by the developers of C, this new version helps readers keep up with the finalized ANSI standard for C while showing how to take advantage of C's rich set of operators, economy of expression, improved control flow, and data structures.",
             'product_description': '',
@@ -89,6 +91,7 @@ def shared_context():
         'detail': {
             'title': 'Hydroponic Food Production: A Definitive Guidebook for the Advanced Home Gardener and the Commercial Hydroponic Grower, Seventh Edition',
             'author': ['Howard M. Resh'],
+            'bylines': {},
             'feature_bullets': [],
             'book_description': "Hydroponic Food Production: A Definitive Guidebook for the Advanced Home Gardener and the Commercial Hydroponic Grower",
             'product_description': '',
@@ -121,6 +124,7 @@ def shared_context():
         'detail': {
             'title': 'Simple Leather Vintage Female Quartz Watch Wristwatch Black',
             'author': ['LinTimes'],
+            'bylines': {},
             'feature_bullets': [
                 'Vintage bracelet wrist watch for women or ladies.100% brand new with fabulous appearance.',
                 'Thickness:5mm, Dial diameter:23mm,Buckle and case material:Stainless Steel',
@@ -162,6 +166,7 @@ def shared_context():
         'detail': {
             'title': 'uxcell Stretch Spandex Short Dining Chair Covers Slipcovers Parson Chair Covers White + Black',
             'author': ['uxcell'],
+            'bylines': {},
             'feature_bullets': [
                 'High stretchable fabric chair covers, it can protect your furniture from spills, stains, wear and tear, they are Environmental and healthy.',
                 'Wrinkle Resistant: Chair Slipcovers can secure fit with sewn-in elastic hem and cover your chairs quickly, bring a new face to your chair.',
@@ -207,6 +212,7 @@ def shared_context():
         'detail': {
             'title': 'Palarn Women Tops, Sexy O-Neck Flora Printed Sleeveless Vest Chiffon Tops T-Shirt Blouse',
             'author': ['Palarn'],
+            'bylines': {},
             'feature_bullets': [
                 'Cotton Blended',
                 'Imported',
@@ -251,6 +257,9 @@ def shared_context():
         'detail': {
             'title': 'Anthem Of The Peaceful Army',
             'author': ['Greta Van Fleet'],
+            'bylines': {
+                'Format': 'Audio CD'
+            },
             'feature_bullets': [],
             'book_description': "",
             'product_description': '',
@@ -284,6 +293,10 @@ def shared_context():
         'detail': {
             'title': 'The Cars Live - Musikladen 1979',
             'author': ['Ric Ocasek', 'Ben Orr'],
+            'bylines': {
+                'Rated': 'NR',
+                'Format': 'DVD'
+            },
             'feature_bullets': [],
             'book_description': "",
             'product_description': '',

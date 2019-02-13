@@ -23,6 +23,7 @@ def shared_context():
         'detail': {
             'title': 'The Confidence Code for Girls: Taking Risks, Messing Up, and Becoming Your Amazingly Imperfect, Totally Powerful Self',
             'author': ['Katty Kay', 'Claire Shipman', 'JillEllyn Riley', 'Nan Lawson'],
+            'bylines': {},
             'feature_bullets': [],
             'book_description': 'Girls can rule the world',
             'product_description': '',
@@ -55,6 +56,7 @@ def shared_context():
         'detail': {
             'title': 'C Programming Language (2nd Edition)',
             'author': ['Brian W. Kernighan', 'Dennis Ritchie'],
+            'bylines': {},
             'feature_bullets': [],
             'book_description': "The authors present the complete guide to ANSI standard C language programming.",
             'product_description': '',
@@ -87,6 +89,7 @@ def shared_context():
         'detail': {
             'title': 'Hydroponic Food Production: A Definitive Guidebook for the Advanced Home Gardener and the Commercial Hydroponic Grower, Seventh Edition',
             'author': ['Howard M. Resh'],
+            'bylines': {},
             'feature_bullets': [],
             'book_description': "Hydroponic Food Production: A Definitive Guidebook for the Advanced Home Gardener and the Commercial Hydroponic Grower, Seventh Edition",
             'product_description': '',
@@ -120,6 +123,7 @@ def shared_context():
         'detail': {
             'title': 'Simple Leather Vintage Female Quartz Watch Wristwatch Black',
             'author': ['LinTimes'],
+            'bylines': {},
             'feature_bullets': [
                 'Vintage bracelet wrist watch for women or ladies.100% brand new with fabulous appearance.',
                 'Thickness:5mm, Dial diameter:23mm,Buckle and case material:Stainless Steel',
@@ -160,6 +164,7 @@ def shared_context():
         'detail': {
             'title': u'uxcell® Dining Chair Cover,Stretch Bar Stool Slipcover Kitchen Pattern Chair Protector Spandex Short Chair Seat Cover for Home Decorative/Dining Room/Party/Wedding (Medium,White + Black)',
             'author': ['uxcell'],
+            'bylines': {},
             'feature_bullets': [
             	u'√High Stretchable:Spandex chair covers made of elastic fabric,suitable for medium&large chair,it can protect your furniture from spills, stains, wear and tear.',
             	u'√Wrinkle Resistant: Cotton chair cover is fadeless and pilling resistance for long-lasting durability.Waterproof chair slipcovers can secure fit with sewn-in plastic fabric and cover your chairs quickly, bring a new face to your high back chair.',
@@ -204,6 +209,7 @@ def shared_context():
         'detail': {
             'title': 'Palarn Women Tops, Sexy O-Neck Flora Printed Sleeveless Vest Chiffon Tops T-Shirt Blouse',
             'author': ['Palarn'],
+            'bylines': {},
             'feature_bullets': [
                 'Cotton Blended',
                 'Casual print tank tops blouse makes you more lovely and vitality, show your personality wearing style',
@@ -248,6 +254,9 @@ def shared_context():
         'detail': {
             'title': 'Anthem Of The Peaceful Army',
             'author': ['Greta Van Fleet'],
+            'bylines': {
+            	'Format': 'Audio CD'
+            },
             'feature_bullets': [],
             'book_description': "",
             'product_description': '',
@@ -282,6 +291,10 @@ def shared_context():
         'detail': {
             'title': 'The Cars Live Musikladen 1979 (International Release)',
             'author': [],
+            'bylines': {
+            	'Rated': 'NR (Not Rated)',
+            	'Format': 'DVD'
+            },
             'feature_bullets': [],
             'book_description': "",
             'product_description': '',
@@ -371,3 +384,9 @@ def test_parse_details(shared_context):
         details = v['parser'].parse_details()
         for dk, dv in v['detail']['details'].items():
             assert details.get(dk, '') == dv
+
+def test_parse_byline(shared_context):
+    for k, v in shared_context.items():
+        bylines = v['parser'].parse_bylines()
+        for dk, dv in v['detail']['bylines'].items():
+            assert bylines.get(dk, '') == dv

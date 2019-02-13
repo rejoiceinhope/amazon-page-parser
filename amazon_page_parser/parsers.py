@@ -28,7 +28,8 @@ class DetailParser(object):
             'reviews': self.parse_reviews(),
             'rank': self.parse_rank(),
             'categories': self.parse_categories(),
-            'details': self.parse_details()
+            'details': self.parse_details(),
+            'bylines': self.parse_bylines()
         }
 
     def parse_title(self):
@@ -50,6 +51,21 @@ class DetailParser(object):
         # author_elems.extend(self.selector.xpath(xpath_str))
 
         return author_elems.getall()
+
+    def parse_bylines(self):
+        bylines = dict()
+        xpath_str = '//*[@id="bylineInfo"]/span[@class="a-color-secondary"]'
+        byline_elems = self.selector.xpath(xpath_str)
+        byline_elems.extend(self.selector.xpath(
+            '//*[@id="bylineInfo"]/span[@class="a-color-secondary"]'))
+        for byline_elem in byline_elems:
+            key = byline_elem.xpath('./text()').get().strip().strip(':')
+            value = byline_elem.xpath('./following-sibling::span/text()').get()
+            value = value.strip() if value else ''
+            if key and value:
+                bylines[key] = value
+
+        return bylines
 
     def parse_feature_bullets(self):
         raw_bullets = self.selector.xpath(
