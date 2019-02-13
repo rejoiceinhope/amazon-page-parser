@@ -45,3 +45,4 @@ ENV/
 *.log
 *.ini
 !tox.ini
+.DS_Store

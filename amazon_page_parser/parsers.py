@@ -125,7 +125,12 @@ class DetailParser(object):
         for details_elem in details_elems:
             key = details_elem.xpath('./b/text()').get()
             key = key.strip().strip(':') if key else ''
-            value = details_elem.xpath('./text()').get()
+            if key == 'Format':
+                value = details_elem.xpath('./a/text()').get()
+            elif key == 'Other Editions':
+                value = ' | '.join(details_elem.xpath('./a/text()').getall())
+            else:
+                value = details_elem.xpath('./text()').get()
             value = value.strip() if value else ''
             if key and value:
                 details[key] = value
@@ -175,9 +180,25 @@ class DetailParser(object):
                     value = value.split('(').pop(0).strip()
                 details[key] = value
 
+        details_elems = self.selector.xpath(
+            '//div[@id="detail_bullets_id"]/table/tr/td/div[@class="content"]/ul/li')
+        for details_elem in details_elems:
+            key = details_elem.xpath('./b/text()').get()
+            key = key.strip().strip(':') if key else ''
+            if key == 'Other Editions':
+                value = ' | '.join(details_elem.xpath('./a/text()').getall())
+            else:
+                value = ''.join(details_elem.xpath('./text()').getall())
+            value = value.strip() if value else ''
+            if key and value:
+                details[key] = value
+
         if 'Shipping Weight' in details:
             details['Shipping Weight'] = details['Shipping Weight'].replace(
                 '(', '').replace(')', '').strip()
+
+        if 'Region' in details:
+            details['Region'] = details['Region'].split('(').pop(0).strip()
 
         return details
 
