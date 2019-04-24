@@ -19,9 +19,9 @@ setup(
     version=version,
     description='A library for parsing amazon pages.',
     long_description=long_description,
-    url='https://github.com/hyan15/amazon-page-parser',
-    author='hyan15',
-    author_email='qwang16@olivetuniversity.edu',
+    url='https://bitbucket.org/sfds-dev/amazon-page-parser',
+    author='Neal Wong',
+    author_email='neal.wkacc@gmail.com',
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -37,6 +37,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities'

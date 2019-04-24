@@ -70,7 +70,7 @@ class DetailParser(object):
     def parse_feature_bullets(self):
         raw_bullets = self.selector.xpath(
             '//*[@id="feature-bullets"]/ul/li/span[contains(@class, "a-list-item")]/text()').getall()
-        return [s.strip() for s in raw_bullets if s and not s.isspace()]
+        return [s.strip().replace(u'\xa0', ' ') for s in raw_bullets if s and not s.isspace()]
 
     def parse_book_description(self):
         noscript_elems = self.selector.xpath('//*[@id="bookDescription_feature_div"]/noscript')
@@ -143,7 +143,8 @@ class DetailParser(object):
             key = key.strip().strip(':') if key else ''
             if key == 'Format':
                 value = details_elem.xpath('./a/text()').get()
-            elif key == 'Other Editions':
+            elif key == 'Other Editions' or key == 'Weitere Ausgaben' or \
+                key.find('Autres versions') != -1:
                 value = ' | '.join(details_elem.xpath('./a/text()').getall())
             else:
                 value = details_elem.xpath('./text()').get()
@@ -201,10 +202,21 @@ class DetailParser(object):
         for details_elem in details_elems:
             key = details_elem.xpath('./b/text()').get()
             key = key.strip().strip(':') if key else ''
-            if key == 'Other Editions':
+            if key == 'Other Editions' or key == 'Weitere Ausgaben' or \
+                key.find('Autres versions') != -1:
                 value = ' | '.join(details_elem.xpath('./a/text()').getall())
             else:
                 value = ''.join(details_elem.xpath('./text()').getall())
+            value = value.strip() if value else ''
+            if key and value:
+                details[key] = value
+
+        details_elems = self.selector.xpath(
+            '//div[@id="prodDetails"]//div[@class="pdTab"]/table//tr')
+        for details_elem in details_elems:
+            key = details_elem.xpath('./td[@class="label"]/text()').get()
+            key = key.strip().strip(':') if key else ''
+            value = details_elem.xpath('./td[@class="value"]/text()').get()
             value = value.strip() if value else ''
             if key and value:
                 details[key] = value
@@ -216,7 +228,17 @@ class DetailParser(object):
         if 'Region' in details:
             details['Region'] = details['Region'].split('(').pop(0).strip()
 
-        return details
+        for k in [
+            'Amazon Bestsellers Rank', 'Amazon Best Sellers Rank',
+            'Average Customer Review', 'Customer Reviews']:
+            if k in details:
+                details.pop(k)
+
+        result = dict()
+        for k, v in details.items():
+            result[k.strip().replace(u'\xa0', '')] = v
+
+        return result
 
     def parse_specifications(self):
         pass
@@ -225,6 +247,12 @@ class DetailParser(object):
         categories = []
         category_wrappers = self.selector.xpath(
             '//*[@id="SalesRank"]/ul[@class="zg_hrsr"]/li')
+        for category_wrapper in category_wrappers:
+            categories.append('>'.join(
+                category_wrapper.xpath('./span[@class="zg_hrsr_ladder"]//a/text()').getall()))
+
+        category_wrappers = self.selector.xpath(
+            '//*[@id="SalesRank"]/td[@class="value"]/ul[@class="zg_hrsr"]/li')
         for category_wrapper in category_wrappers:
             categories.append('>'.join(
                 category_wrapper.xpath('./span[@class="zg_hrsr_ladder"]//a/text()').getall()))
@@ -246,9 +274,13 @@ class DetailParser(object):
     def parse_rank(self):
         sales_rank_str = ''.join(
             self.selector.xpath('//*[@id="SalesRank"]/text()').getall()).strip()
+        if not sales_rank_str:
+            raw_sales_rank_str = ''.join(
+                self.selector.xpath('//*[@id="SalesRank"]/td[@class="value"]/text()').getall())
+            sales_rank_str = raw_sales_rank_str.strip()
         if sales_rank_str:
             try:
-                rank = int(sales_rank_str.split().pop(0).strip('#').replace(',', ''))
+                rank = int(re.sub(r'[#,\.]', '', sales_rank_str.replace('Nr. ', '').split().pop(0)))
             except:
                 rank = 0
         else:
@@ -259,7 +291,8 @@ class DetailParser(object):
                 self.selector.xpath(common_xpath_str).xpath('./span/span/text()').getall()).strip()
             if sales_rank_str:
                 try:
-                    rank = int(sales_rank_str.split().pop(0).replace('#', '').replace(',', ''))
+                    rank = int(
+                        re.sub(r'[#,\.]', '', sales_rank_str.replace('Nr. ', '').split().pop(0)))
                 except:
                     rank = 0
             else:

@@ -11,10 +11,10 @@ from amazon_page_parser.parsers import DetailParser
 import six
 import pytest
 
-def test_parse(ca_detail_pages, ca_target_details):
-    for page_path in ca_detail_pages:
+def test_parse(us_detail_pages, us_target_details):
+    for page_path in us_detail_pages:
         asin, _ = os.path.splitext(os.path.basename(page_path))
-        target_detail = ca_target_details.get(asin, dict())
+        target_detail = us_target_details.get(asin, dict())
         with io.open(page_path, 'rb') as f:
             c = f.read()
             if six.PY2:
