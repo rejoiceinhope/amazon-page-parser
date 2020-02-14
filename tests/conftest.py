@@ -66,6 +66,11 @@ def es_detail_pages(es_pages_dir):
     return glob(os.path.join(es_pages_dir, 'details', '*.html'))
 
 @pytest.fixture(scope='session')
+def tracking_pages():
+    tracking_pages_dir = os.path.join(os.path.dirname(__file__), 'pages', 'tracking')
+    return glob(os.path.join(tracking_pages_dir, '*.html'))
+
+@pytest.fixture(scope='session')
 def us_target_details():
     return {
         '0062796984': {
@@ -1354,3 +1359,38 @@ def fr_target_details():
 #             'details': {}
 #         },
 #     }
+
+@pytest.fixture(scope='session')
+def target_trackings():
+    return [
+        {
+            'carrier': 'Amazon',
+            'tracking_id': 'TBA499451967000',
+            'is_shipped': True
+        },
+        {
+            'carrier': 'FedEx',
+            'tracking_id': '390331877809',
+            'is_shipped': True
+        },
+        {
+            'carrier': 'USPS',
+            'tracking_id': '9341920111404304555052',
+            'is_shipped': True
+        },
+        {
+            'carrier': 'UPS',
+            'tracking_id': '1Z9X26970305165260',
+            'is_shipped': True
+        },
+        {
+            'carrier': None,
+            'tracking_id': None,
+            'is_shipped': False
+        },
+        {
+            'carrier': 'USPS',
+            'tracking_id': None,
+            'is_shipped': False
+        },
+    ]

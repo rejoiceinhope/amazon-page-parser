@@ -19,6 +19,7 @@ setup(
     version=version,
     description='A library for parsing amazon pages.',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://bitbucket.org/sfds-dev/amazon-page-parser',
     author='Neal Wong',
     author_email='neal.wkacc@gmail.com',

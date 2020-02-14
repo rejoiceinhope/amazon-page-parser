@@ -29,6 +29,11 @@ Offer listing fields are:
 * seller_stars - Seller stars count
 * offer_listing_id - Offer listing ID
 
+Tracking fields are:
+* carrier - Carrier name
+* tracking_id - Tracking number
+* is_shipped - Whether order is shipped
+
 
 Installation
 -------------
