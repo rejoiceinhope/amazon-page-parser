@@ -1393,4 +1393,9 @@ def target_trackings():
             'tracking_id': None,
             'is_shipped': False
         },
+        {
+            'carrier': 'USPS',
+            'tracking_id': '9349020111404312304627',
+            'is_shipped': True
+        },
     ]

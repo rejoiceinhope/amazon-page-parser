@@ -319,6 +319,7 @@ class OfferListingParser(object):
                 'prime': self.parse_prime(offer_elem),
                 'expected_shipping': self.parse_expected_shipping(offer_elem),
                 'seller_name': self.parse_seller_name(offer_elem),
+                'seller_id': self.parse_seller_id(offer_elem),
                 'seller_rating': self.parse_seller_rating(offer_elem),
                 'seller_feedbacks': self.parse_seller_feedbacks(offer_elem),
                 'seller_stars': self.parse_seller_stars(offer_elem),
@@ -385,8 +386,9 @@ class OfferListingParser(object):
                 sub_condition = condition_elem.xpath(
                     './span[@id="offerSubCondition"]/text()').get().strip()
         else:
-            condition_strs = condition_elem.xpath('.//text()').getall()
-            condition_str = [part.strip() for part in condition_strs]
+            # condition_strs = condition_elem.xpath('.//text()').getall()
+            # condition_str = [part.strip() for part in condition_strs]
+            condition_str = condition_elem.xpath('./text()').get()
             if condition_str.lower().find('new') != -1:
                 condition = 'New'
                 sub_condition = 'New'
@@ -462,6 +464,25 @@ class OfferListingParser(object):
             raise RuntimeError('Could not find seller name')
 
         return seller_name
+
+    def parse_seller_id(self, offer_elem):
+        amazon_elem = offer_elem.xpath(
+            './div[contains(@class, "olpSellerColumn")]/*[contains(@class, "olpSellerName")]//img').get()
+        if amazon_elem is not None:
+            return 'Amazon'
+
+        seller_link = offer_elem.xpath(
+            './div[contains(@class, "olpSellerColumn")]/*[contains(@class, "olpSellerName")]//a/@href').get()
+        if not seller_link:
+            raise RuntimeError('Could not find seller link')
+
+        result = re.search(r'&seller=(?P<seller_id>[A-Z0-9]+)', seller_link)
+        if result:
+            seller_id = result.group('seller_id')
+        else:
+            seller_id = None
+
+        return seller_id
 
     def parse_seller_rating(self, offer_elem):
         rating = 0

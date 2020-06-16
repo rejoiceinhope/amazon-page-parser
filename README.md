@@ -24,6 +24,7 @@ Offer listing fields are:
 * prime - Whether shipping supports prime options
 * expected_shipping - Whether shipping support expected options
 * seller_name - Seller name
+* seller_id - Seller ID
 * seller_rating - Seller rating
 * seller_feedbacks - Seller feedback count
 * seller_stars - Seller stars count
@@ -35,12 +36,17 @@ Tracking fields are:
 * is_shipped - Whether order is shipped
 
 
+Store Front fields are:
+* asins - Store front asins in page
+* next_page_url - Next page url path
+
+
 Installation
 -------------
 
 The simplest way is to install it via `pip`:
 
-    pip install amazon-page-parser
+    devpi install amazon-page-parser
 
 
 Run Test
