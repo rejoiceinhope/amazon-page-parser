@@ -127,7 +127,7 @@ class DetailParser(object):
         reviews_str = self.selector.xpath(
             '//*[@id="acrCustomerReviewText"]/text()').get()
         try:
-            reviews = int(reviews_str.strip().split().pop(0))
+            reviews = int(re.sub(r'[^0-9]', '', reviews_str.strip().split().pop(0)))
         except:
             pass
 
@@ -307,7 +307,11 @@ class OfferListingParser(object):
         self.html_parser = HTMLParser()
 
     def parse(self):
-        offers = []
+        offer_listing = {
+            'star': self.parse_star(),
+            'reviews': self.parse_reviews(),
+            'offers': []
+        }
         offer_elems = self.selector.xpath(
             './/div[@id="olpOfferList"]//div[contains(@class, "olpOffer")]')
         for offer_elem in offer_elems:
@@ -326,9 +330,37 @@ class OfferListingParser(object):
                 'offer_listing_id': self.parse_offer_listing_id(offer_elem)
             }
             offer['condition'], offer['subcondition'] = self.parse_condition(offer_elem)
-            offers.append(offer)
+            offer_listing['offers'].append(offer)
 
-        return offers
+        return offer_listing
+
+    def parse_star(self):
+        star_elem = self.selector.xpath(
+            '//div[@id="olpProductDetails"]//i[contains(@class, "a-icon-star")]/span[contains(@class, "a-icon-alt")]')
+        if star_elem:
+            star_str = star_elem.xpath('./text()').get().strip()
+            try:
+                star = float(star_str.split().pop(0))
+            except:
+                star = 0
+        else:
+            star = 0
+
+        return star
+
+    def parse_reviews(self):
+        reviews_elem = self.selector.xpath(
+            '//div[@id="olpProductDetails"]//a[contains(text(), "customer ratings")]')
+        if reviews_elem:
+            reviews_str = reviews_elem.xpath('./text()').get().strip()
+            try:
+                reviews = int(re.sub(r'[^0-9]', '', reviews_str.split().pop(0)))
+            except:
+                reviews = 0
+        else:
+            reviews = 0
+
+        return reviews
 
     def parse_price(self, offer_elem):
         price = 0
@@ -336,7 +368,14 @@ class OfferListingParser(object):
         price_str = offer_elem.xpath(
             './div[contains(@class, "olpPriceColumn")]/span[contains(@class, "olpOfferPrice")]/text()').get()
         if price_str:
-            price = float(re.sub(r'[^0-9\.]', '', price_str.strip().replace(',', '.')))
+            price_str = re.sub(r'[^0-9\.]', '', price_str.strip().replace(',', '.'))
+            dot_cnt = price_str.count('.')
+            if dot_cnt > 1:
+                price_parts = price_str.split('.')
+                last_part = price_parts.pop()
+                first_part = ''.join(price_parts)
+                price_str = '.'.join([first_part, last_part])
+            price = float(price_str)
         else:
             raise RuntimeError('Could not find price element')
 

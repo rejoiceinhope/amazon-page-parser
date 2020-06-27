@@ -15,20 +15,23 @@ Currently supported detail fields are:
 * details - Details are key, value pairs.
 
 Offer listing fields are:
-* price - Product price
-* shipping_price - Shipping price
-* condition - Condition
-* subcondition - Subcondition
-* condition_comments - Condition comments
-* available - Whether product is currently available, or needs pre-ordered
-* prime - Whether shipping supports prime options
-* expected_shipping - Whether shipping support expected options
-* seller_name - Seller name
-* seller_id - Seller ID
-* seller_rating - Seller rating
-* seller_feedbacks - Seller feedback count
-* seller_stars - Seller stars count
-* offer_listing_id - Offer listing ID
+* star - Average star of custom reviews
+* reviews - Custom reviews count
+* offers
+    * price - Product price
+    * shipping_price - Shipping price
+    * condition - Condition
+    * subcondition - Subcondition
+    * condition_comments - Condition comments
+    * available - Whether product is currently available, or needs pre-ordered
+    * prime - Whether shipping supports prime options
+    * expected_shipping - Whether shipping support expected options
+    * seller_name - Seller name
+    * seller_id - Seller ID
+    * seller_rating - Seller rating
+    * seller_feedbacks - Seller feedback count
+    * seller_stars - Seller stars count
+    * offer_listing_id - Offer listing ID
 
 Tracking fields are:
 * carrier - Carrier name
@@ -44,7 +47,7 @@ Store Front fields are:
 Installation
 -------------
 
-The simplest way is to install it via `pip`:
+The simplest way is to install it via `devpi`:
 
     devpi install amazon-page-parser
 
@@ -52,6 +55,6 @@ The simplest way is to install it via `pip`:
 Run Test
 -------------
 
-`pip install -r requirements-dev.txt`
+`devpi install -r requirements-dev.txt`
 
 `tox`
