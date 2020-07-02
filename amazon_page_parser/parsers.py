@@ -350,7 +350,7 @@ class OfferListingParser(object):
 
     def parse_reviews(self):
         reviews_elem = self.selector.xpath(
-            '//div[@id="olpProductDetails"]//a[contains(text(), "customer ratings")]')
+            '//div[@id="olpProductDetails"]//a[contains(text(), "customer rating")]')
         if reviews_elem:
             reviews_str = reviews_elem.xpath('./text()').get().strip()
             try:
